@@ -45,12 +45,11 @@ setup(
 
     py_modules=['check_dates'],
     zip_safe=False,
-    test_suite='tests.test_suite',
     install_requires=[],
     extras_require={
-        'test': ['mock'],
+        'test': ['pytest'],
     },
-    tests_require=['mock'],
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             'check-dates= check_dates:main',
