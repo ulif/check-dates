@@ -24,3 +24,9 @@ and run tests like this::
 
     $ python setup.py test
 
+We use `tox` to run tests on different Python versions and to check other
+things. You can easily install and run tox::
+
+    $ pip install tox  # installs `tox`
+    $ tox              # runs tests
+
