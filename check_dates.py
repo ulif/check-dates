@@ -2,6 +2,7 @@
 """Check dates in package-local manpages for being up-to-date.
 """
 import locale
+import os
 import subprocess
 
 __version__ = "0.1.dev0"
@@ -35,7 +36,7 @@ def run(command, encoding=None, decode=True, cwd=None):
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.STDOUT, cwd=cwd)
     except OSError as e:
-        raise Failure("could not run %s: %s" % (command, e))
+        raise Exception("could not run %s: %s" % (command, e))
     output = pipe.communicate()[0]
     if decode:
         output = output.decode(encoding)
