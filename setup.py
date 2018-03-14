@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import os, re, ast, email.utils, sys
+import ast
+import email.utils
+import os
+import re
 from setuptools import setup
 
 here = os.path.dirname(__file__)
