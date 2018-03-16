@@ -11,3 +11,9 @@ def test_command_failed(capsys):
 def test_run():
     # we can run commands in local env
     assert run(["true"]) is ""
+
+def test_run_failure(capsys):
+    # we are notified if a command fails
+    with pytest.raises(CommandFailed) as exc:
+        run(["false"])
+    assert str(exc.value) == "['false'] failed (status 1):\n"
