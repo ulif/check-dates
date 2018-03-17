@@ -15,7 +15,15 @@ def test_run():
 
 
 def test_run_failure(capsys):
-    # we are notified if a command fails
+    # we are notified if a command runs but fails finally
     with pytest.raises(CommandFailed) as exc:
         run(["false"])
     assert str(exc.value) == "['false'] failed (status 1):\n"
+
+
+def test_run_unrunnable(capsys):
+    # we are notified if a command is not even runnable
+    with pytest.raises(Exception) as exc:
+        run(["not-existing-cmd"])
+    assert str(exc.value).startswith(
+            "could not run ['not-existing-cmd']: ")
