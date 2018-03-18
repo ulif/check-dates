@@ -2,7 +2,7 @@ import pytest
 from check_dates import CommandFailed, run
 
 
-def test_command_failed(capsys):
+def test_command_failed():
     # The `CommandFailed` exception gives helpful output.
     with pytest.raises(CommandFailed) as exc:
         raise CommandFailed('some-cmd', 23, 'foo')
@@ -14,14 +14,14 @@ def test_run():
     assert run(["true"]) == ""
 
 
-def test_run_failure(capsys):
+def test_run_failure():
     # we are notified if a command runs but fails finally
     with pytest.raises(CommandFailed) as exc:
         run(["false"])
     assert str(exc.value) == "['false'] failed (status 1):\n"
 
 
-def test_run_unrunnable(capsys):
+def test_run_unrunnable():
     # we are notified if a command is not even runnable
     with pytest.raises(Exception) as exc:
         run(["not-existing-cmd"])
