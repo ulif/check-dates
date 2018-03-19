@@ -1,5 +1,5 @@
 import pytest
-from check_dates import CommandFailed, run
+from check_dates import CommandFailed, run, main
 
 
 def test_command_failed():
@@ -27,3 +27,9 @@ def test_run_unrunnable():
         run(["not-existing-cmd"])
     assert str(exc.value).startswith(
             "could not run ['not-existing-cmd']: ")
+
+
+def test_main():
+    # we can run main w/o any hassle
+    from check_dates import main
+    main()
