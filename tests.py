@@ -31,5 +31,4 @@ def test_run_unrunnable():
 
 def test_main():
     # we can run main w/o any hassle
-    from check_dates import main
     main()
