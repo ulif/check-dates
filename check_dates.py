@@ -46,6 +46,15 @@ def run(command, encoding=None, decode=True, cwd=None):
     return output
 
 
+class VCS(object):
+
+    @classmethod
+    def detect(cls, path):
+        """Detect whether `path` is a repository of a certain VCS.
+        """
+        return os.path.isdir(os.path.join(path, cls.METADATA_NAME))
+
+
 #
 # Main script
 #

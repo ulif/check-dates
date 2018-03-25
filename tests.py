@@ -1,5 +1,5 @@
 import pytest
-from check_dates import CommandFailed, run, main
+from check_dates import CommandFailed, run, main, VCS
 
 
 def test_command_failed():
@@ -27,6 +27,17 @@ def test_run_unrunnable():
         run(["not-existing-cmd"])
     assert str(exc.value).startswith(
             "could not run ['not-existing-cmd']: ")
+
+
+def test_class_vcs_detect(tmpdir):
+    # we can detect whether a certain dir is controlled by the foo VCS
+    path = tmpdir.join('.foo')
+    class FooVCS(VCS):
+        METADATA_NAME = '.foo'
+    vcs = FooVCS()
+    assert vcs.detect(str(tmpdir)) is False
+    path.ensure(dir=True)
+    assert vcs.detect(str(tmpdir)) is True
 
 
 def test_main():
