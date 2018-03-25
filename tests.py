@@ -32,6 +32,7 @@ def test_run_unrunnable():
 def test_class_vcs_detect(tmpdir):
     # we can detect whether a certain dir is controlled by the foo VCS
     path = tmpdir.join('.foo')
+
     class FooVCS(VCS):
         METADATA_NAME = '.foo'
     vcs = FooVCS()
