@@ -4,6 +4,7 @@
 import locale
 import os
 import subprocess
+import sys
 
 __version__ = "0.1.dev0"
 __author__ = "ulif <ulif@gnufix.de>"
@@ -53,6 +54,14 @@ class VCS(object):
         """Detect whether `path` is a repository of a certain VCS.
         """
         return os.path.isdir(os.path.join(path, cls.METADATA_NAME))
+
+
+class Git(VCS):
+    METADATA_NAME = '.git'
+
+    # Git for Windows uses UTF-8 instead of the locale encoding.
+    # Git on Posix systems uses the locate encoding.
+    _encoding = 'UTF-8' if sys.platform == 'win32' else None
 
 
 #

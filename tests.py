@@ -1,5 +1,5 @@
 import pytest
-from check_dates import CommandFailed, run, main, VCS
+from check_dates import CommandFailed, run, main, VCS, Git
 
 
 def test_command_failed():
@@ -39,6 +39,15 @@ def test_class_vcs_detect(tmpdir):
     assert vcs.detect(str(tmpdir)) is False
     path.ensure(dir=True)
     assert vcs.detect(str(tmpdir)) is True
+
+
+def test_git_detect(tmpdir):
+    # we can detect git repos
+    path = tmpdir.join('.git')
+    git = Git()
+    assert git.detect(str(tmpdir)) is False
+    path.ensure(dir=True)
+    assert git.detect(str(tmpdir)) is True
 
 
 def test_main():
