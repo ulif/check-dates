@@ -2,6 +2,13 @@ import pytest
 from check_dates import CommandFailed, run, main, VCS, Git
 
 
+@pytest.fixture(scope="function", autouse=True)
+def home_dir(request, monkeypatch, tmpdir):
+    """Set $HOME to some temporary dir."""
+    monkeypatch.setenv("HOME", str(tmpdir))
+    return tmpdir
+
+
 def test_command_failed():
     # The `CommandFailed` exception gives helpful output.
     with pytest.raises(CommandFailed) as exc:
