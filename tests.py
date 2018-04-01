@@ -1,4 +1,6 @@
+import locale
 import pytest
+import subprocess
 from check_dates import CommandFailed, run, main, VCS, Git
 
 
@@ -7,6 +9,34 @@ def home_dir(request, monkeypatch, tmpdir):
     """Set $HOME to some temporary dir."""
     monkeypatch.setenv("HOME", str(tmpdir))
     return tmpdir
+
+
+class VCSHelper(object):
+    # Stolen from https://github.com/mgedmin/check-manifest
+
+    command = None  # override in subclasses
+
+    def is_installed(self):
+        try:
+            p = subprocess.Popen([self.command, '--version'],
+                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            stdout, stderr = p.communicate()
+            rc = p.wait()
+            return (rc == 0)
+        except OSError:
+            return False
+
+    def _run(self, *command):
+        if str is bytes:
+            command = [s.encode(locale.getpreferredencoding()) for s in command]
+        p = subprocess.Popen(command, stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT)
+        stdout, stderr = p.communicate()
+        rc = p.wait()
+        if rc:
+            print(' '.join(command))
+            print(stdout)
+            raise subprocess.CalledProcessError(rc, command[0], output=stdout)
 
 
 def test_command_failed():
