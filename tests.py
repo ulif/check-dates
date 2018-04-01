@@ -18,8 +18,9 @@ class VCSHelper(object):
 
     def is_installed(self):
         try:
-            p = subprocess.Popen([self.command, '--version'],
-                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            p = subprocess.Popen(
+                    [self.command, '--version'],
+                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             stdout, stderr = p.communicate()
             rc = p.wait()
             return (rc == 0)
@@ -28,7 +29,8 @@ class VCSHelper(object):
 
     def _run(self, *command):
         if str is bytes:
-            command = [s.encode(locale.getpreferredencoding()) for s in command]
+            command = [s.encode(locale.getpreferredencoding())
+                       for s in command]
         p = subprocess.Popen(command, stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
         stdout, stderr = p.communicate()
