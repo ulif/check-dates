@@ -8,6 +8,7 @@ from check_dates import CommandFailed, run, main, VCS, Git
 def home_dir(request, monkeypatch, tmpdir):
     """Set $HOME to some temporary dir."""
     monkeypatch.setenv("HOME", str(tmpdir))
+    tmpdir.chdir()
     return tmpdir
 
 
