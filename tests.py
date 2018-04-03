@@ -91,6 +91,17 @@ class TestGit(object):
         path.ensure(dir=True)
         assert git.detect(str(tmpdir)) is True
 
+    def test_git_get_versioned_files(self, home_dir):
+        # we can get a list of versioned files.
+        helper = VCSHelper()
+        helper._run("git", "init")
+        helper._run("git", "config", "user.name", "pytest")
+        helper._run("git", "config", "user.email", "test@example.org")
+        git = Git()
+        home_dir.join("foo").write("bar")
+        helper._run("git", "add", "foo")
+        assert git.get_versioned_files() == ['foo']
+
 
 def test_main():
     # we can run main w/o any hassle

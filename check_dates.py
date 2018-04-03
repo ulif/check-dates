@@ -63,6 +63,13 @@ class Git(VCS):
     # Git on Posix systems uses the locate encoding.
     _encoding = 'UTF-8' if sys.platform == 'win32' else None
 
+    @classmethod
+    def get_versioned_files(cls, path=None):
+        """Get all versioned files from `path`."""
+        output = run(
+                ['git', 'ls-files', '-z'], encoding=cls._encoding, cwd=path)
+        return output.split('\0')[:-1]
+
 
 #
 # Main script
