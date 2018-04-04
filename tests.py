@@ -41,6 +41,11 @@ class VCSHelper(object):
             print(stdout)
             raise subprocess.CalledProcessError(rc, command[0], output=stdout)
 
+    def init_repo(self):
+        self._run("git", "init")
+        self._run("git", "config", "user.name", "pytest")
+        self._run("git", "config", "user.email", "test@example.org")
+
 
 def test_command_failed():
     # The `CommandFailed` exception gives helpful output.
