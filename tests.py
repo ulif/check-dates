@@ -105,6 +105,21 @@ class TestGit(object):
         helper._run("git", "add", "foo")
         assert git.get_versioned_files() == ['foo']
 
+    def test_git_get_versioned_files_nofile(self, home_dir):
+        # we cope with empty git repos
+        helper = VCSHelper()
+        helper.init_repo()
+        git = Git()
+        assert git.get_versioned_files() == []
+
+    def test_git_get_versioned_files_norepo(self, home_dir):
+        # we cope with the situation when there is no repo
+        helper = VCSHelper()
+        git = Git()
+        with pytest.raises(CommandFailed) as exc:
+            git.get_versioned_files() == []
+        assert "Not a git repository" in str(exc.value)
+
 
 def test_main():
     # we can run main w/o any hassle
