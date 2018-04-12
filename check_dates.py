@@ -12,6 +12,10 @@ __license__ = "GPLv3+"
 __url__ = "https://github.com/ulif/check-dates"
 
 
+class Failure(Exception):
+    """An expected failure (as opposed to a bug in this script)."""
+
+
 #
 # Filesystem/OS utilities
 #
