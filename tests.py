@@ -114,7 +114,6 @@ class TestGit(object):
 
     def test_git_get_versioned_files_norepo(self, home_dir):
         # we cope with the situation when there is no repo
-        helper = VCSHelper()
         git = Git()
         with pytest.raises(CommandFailed) as exc:
             git.get_versioned_files() == []
