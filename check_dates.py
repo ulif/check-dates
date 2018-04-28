@@ -75,6 +75,18 @@ class Git(VCS):
         return output.split('\0')[:-1]
 
 
+def detect_vcs():
+    location = os.path.abspath('.')
+    while True:
+        for vcs in Git, :
+            if vcs.detect(location):
+                return vcs
+        parent = os.path.dirname(location)
+        if parent == location:
+            raise Failure("Couldn't find version control data (git supported)")
+        location = parent
+
+
 #
 # Main script
 #

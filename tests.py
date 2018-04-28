@@ -1,7 +1,7 @@
 import locale
 import pytest
 import subprocess
-from check_dates import CommandFailed, run, main, VCS, Git
+from check_dates import CommandFailed, run, main, VCS, Git, detect_vcs, Failure
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -118,6 +118,13 @@ class TestGit(object):
         with pytest.raises(CommandFailed) as exc:
             git.get_versioned_files() == []
         assert "Not a git repository" in str(exc.value)
+
+
+def test_detect_vcs_no_repo(home_dir):
+        # we require a VCS repo to work
+        with pytest.raises(Failure) as exc:
+            detect_vcs()
+        assert "Couldn't find version control data" in str(exc.value)
 
 
 def test_main():
