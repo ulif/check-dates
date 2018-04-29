@@ -121,10 +121,10 @@ class TestGit(object):
 
 
 def test_detect_vcs_no_repo(home_dir):
-        # we require a VCS repo to work
-        with pytest.raises(Failure) as exc:
-            detect_vcs()
-        assert "Couldn't find version control data" in str(exc.value)
+    # we require a VCS repo to work
+    with pytest.raises(Failure) as exc:
+        detect_vcs()
+    assert "Couldn't find version control data" in str(exc.value)
 
 
 def test_main():
