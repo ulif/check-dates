@@ -127,6 +127,13 @@ def test_detect_vcs_no_repo(home_dir):
     assert "Couldn't find version control data" in str(exc.value)
 
 
+def test_detect_vcs_git(home_dir):
+    # we can detect GIT repos
+    helper = VCSHelper()
+    helper.init_repo()
+    assert detect_vcs() is Git
+
+
 def test_main():
     # we can run main w/o any hassle
     main()
