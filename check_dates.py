@@ -76,6 +76,11 @@ class Git(VCS):
 
 
 def detect_vcs():
+    """Tell, which type of version control system is active in current dir.
+
+    Returns a VCS class if the respective system was found. Currently we
+    support `git` only. That means: you get the `Git` class or an exception.
+    """
     location = os.path.abspath('.')
     while True:
         for vcs in Git, :
