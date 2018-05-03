@@ -46,6 +46,11 @@ class VCSHelper(object):
         self._run("git", "config", "user.name", "pytest")
         self._run("git", "config", "user.email", "test@example.org")
 
+    def add_file(self, filename="foo"):
+        with open(filename, 'w') as fd:
+            fd.write("bar")
+        self._run("git", "add", filename)
+
 
 def test_command_failed():
     # The `CommandFailed` exception gives helpful output.
@@ -100,9 +105,8 @@ class TestGit(object):
         # we can get a list of versioned files.
         helper = VCSHelper()
         helper.init_repo()
+        helper.add_file(filename="foo")
         git = Git()
-        home_dir.join("foo").write("bar")
-        helper._run("git", "add", "foo")
         assert git.get_versioned_files() == ['foo']
 
     def test_git_get_versioned_files_nofile(self, home_dir):
