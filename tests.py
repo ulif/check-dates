@@ -51,6 +51,9 @@ class VCSHelper(object):
             fd.write("bar")
         self._run("git", "add", filename)
 
+    def addcommit_file(self, comment=None, filename="foo"):
+        self.add_file(filename=filename)
+        self._run("git", "commit", "-m", "'%s'" % "Test Commit", filename)
 
 def test_command_failed():
     # The `CommandFailed` exception gives helpful output.
