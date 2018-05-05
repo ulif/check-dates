@@ -74,6 +74,13 @@ class Git(VCS):
                 ['git', 'ls-files', '-z'], encoding=cls._encoding, cwd=path)
         return output.split('\0')[:-1]
 
+    @classmethod
+    def get_last_commit_date(cls, path=None):
+        """Get timestamp of last commit."""
+        output = run(
+                ['git', 'log', '-n', '1', '--date=iso'], encoding=cls._encoding, cwd=path)
+        return output.split('\0')
+
 
 def detect_vcs():
     """Tell, which type of version control system is active in current dir.
