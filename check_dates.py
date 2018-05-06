@@ -78,8 +78,10 @@ class Git(VCS):
     def get_last_commit_date(cls, path=None):
         """Get timestamp of last commit."""
         output = run(
-                ['git', 'log', '-n', '1', '--date=iso'], encoding=cls._encoding, cwd=path)
-        return output.split('\0')
+                ['git', 'log', '-z', '-n', '1', '--format="%ci"'],
+                encoding=cls._encoding, cwd=path)
+        output = output.split('\0')[0]
+        return output
 
 
 def detect_vcs():
