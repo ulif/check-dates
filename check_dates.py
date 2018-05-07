@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Check dates in package-local manpages for being up-to-date.
 """
+import datetime
 import locale
 import os
 import subprocess
@@ -81,7 +82,8 @@ class Git(VCS):
                 ['git', 'log', '-z', '-n', '1', '--format="%ci"'],
                 encoding=cls._encoding, cwd=path)
         output = output.split('\0')[0]
-        return output
+        result = datetime.datetime.strptime(output, '"%Y-%m-%d %H:%M:%S %z"')
+        return result
 
 
 def detect_vcs():
