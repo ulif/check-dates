@@ -1,3 +1,4 @@
+import datetime
 import locale
 import pytest
 import subprocess
@@ -126,6 +127,18 @@ class TestGit(object):
             git.get_versioned_files() == []
         assert "Not a git repository" in str(exc.value)
 
+    def test_git_get_last_commit(self, home_dir, monkeypatch):
+        # we can get a commit date
+        monkeypatch.setenv("LANG", "en")
+        monkeypatch.setenv("GIT_AUTHOR_DATE", "Thu Jun  6 23:23:23 CEST 2013")
+        monkeypatch.setenv("GIT_COMMITTER_DATE", "Thu Jun  6 23:23:23 CEST 2013")
+        helper = VCSHelper()
+        helper.init_repo()
+        helper.addcommit_file(filename="foo")
+        git = Git()
+        tzinfo = datetime.timezone(datetime.timedelta(0, 7200))  # 2 hours
+        assert git.get_last_commit_date() == datetime.datetime(
+                2013, 6, 6, 23, 23, 23, tzinfo=tzinfo)
 
 def test_detect_vcs_no_repo(home_dir):
     # we require a VCS repo to work
