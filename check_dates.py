@@ -83,7 +83,7 @@ class Git(VCS):
                 encoding=cls._encoding, cwd=path)
         output = output.split('\0')[0]
         result = datetime.datetime.strptime(output, '"%Y-%m-%d %H:%M:%S %z"')
-        return result
+        return result.astimezone(datetime.timezone.utc)
 
 
 def detect_vcs():
