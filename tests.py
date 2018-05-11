@@ -139,6 +139,7 @@ class TestGit(object):
         tzinfo = datetime.timezone(datetime.timedelta(0, 7200))  # 2 hours
         assert git.get_last_commit_date() == datetime.datetime(
                 2013, 6, 6, 23, 23, 23, tzinfo=tzinfo)
+        assert git.get_last_commit_date().tzinfo == datetime.timezone.utc
 
 def test_detect_vcs_no_repo(home_dir):
     # we require a VCS repo to work
