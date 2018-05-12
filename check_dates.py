@@ -77,7 +77,11 @@ class Git(VCS):
 
     @classmethod
     def get_last_commit_date(cls, path=None):
-        """Get timestamp of last commit."""
+        """Get timestamp of last commit.
+
+        The timestamp is returned as timzone-aware `datetime.datetime` object
+        in UTC timezone.
+        """
         output = run(
                 ['git', 'log', '-z', '-n', '1', '--format="%ci"'],
                 encoding=cls._encoding, cwd=path)
